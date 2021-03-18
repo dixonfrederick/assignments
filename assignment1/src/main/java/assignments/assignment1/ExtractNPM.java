@@ -3,15 +3,6 @@ package assignments.assignment1;
 import java.util.Scanner;
 
 public class ExtractNPM {
-    /*
-    You can add other method do help you solve
-    this problem
-    
-    Some method you probably need like
-    - Method to get tahun masuk or else
-    - Method to help you do the validation
-    - and so on
-    */
 
     public static long getTahunMasuk(long npm){
         String tahunMasukString = String.valueOf(npm).substring(0,2);
@@ -70,6 +61,12 @@ public class ExtractNPM {
         return urutan;
     }
 
+    public static String getTanggalLahir(long npm){
+        String tanggalLahir = String.valueOf(getTanggal(npm)) + "-" + String.valueOf(npm).substring(6,8) 
+                                + "-" + String.valueOf(getTahun(npm));
+        return tanggalLahir;
+    }
+
     public static long adder(long npm){
         long total = 0;
         for (int i = 0; i < String.valueOf(npm).length(); i++){
@@ -104,8 +101,14 @@ public class ExtractNPM {
     }
 
     public static String extract(long npm) {
-        // TODO: Extract information from NPM, return string with given format
-        return "";
+        if (validate(npm) == true){
+            return "Tahun masuk: " + getTahunMasuk(npm) + "\n" 
+                    + "Jurusan: " + getJurusan(npm) + "\n"
+                    + "Tanggal Lahir: " + getTanggalLahir(npm);
+        }
+        else{
+            return "NPM tidak valid!";
+        }
     }
 
     public static void main(String args[]) {
@@ -117,13 +120,10 @@ public class ExtractNPM {
                 exitFlag = true;
                 break;
             }
-            if (validate(npm) == false){
-                System.out.println("NPM tidak valid!");
-            }
-            else{
-                System.out.println(extract(npm));
-            }
-            
+            System.out.println();
+            System.out.println(extract(npm));
+            System.out.println();
+
         }
         input.close();
     }
