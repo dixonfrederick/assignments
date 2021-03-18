@@ -37,18 +37,6 @@ public class ExtractNPM {
         }
     }
 
-    public static long getTanggal(long npm){
-        String tanggalString = String.valueOf(npm).substring(4,6);
-        long tanggal = java.lang.Long.parseLong(tanggalString);
-        return tanggal;
-    }
-
-    public static long getBulan(long npm){
-        String bulanString = String.valueOf(npm).substring(6,8);
-        long bulan = java.lang.Long.parseLong(bulanString);
-        return bulan;
-    }
-
     public static long getTahun(long npm){
         String tahunString = String.valueOf(npm).substring(8,12);
         long tahun = java.lang.Long.parseLong(tahunString);
@@ -62,7 +50,7 @@ public class ExtractNPM {
     }
 
     public static String getTanggalLahir(long npm){
-        String tanggalLahir = String.valueOf(getTanggal(npm)) + "-" + String.valueOf(npm).substring(6,8) 
+        String tanggalLahir = String.valueOf(npm).substring(4,6) + "-" + String.valueOf(npm).substring(6,8) 
                                 + "-" + String.valueOf(getTahun(npm));
         return tanggalLahir;
     }
