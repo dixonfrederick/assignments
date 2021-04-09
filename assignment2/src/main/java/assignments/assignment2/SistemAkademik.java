@@ -10,16 +10,27 @@ public class SistemAkademik {
     private static final int KELUAR = 5;
     private static Mahasiswa[] daftarMahasiswa = new Mahasiswa[100];
     private static MataKuliah[] daftarMataKuliah = new MataKuliah[100];
+
+    private int totalMahasiswa = 0;
+    private int totalMatkul = 0;
     
     private Scanner input = new Scanner(System.in);
 
     private Mahasiswa getMahasiswa(long npm) {
-        /* TODO: Implementasikan kode Anda di sini */
+        for (int i = 0; i <= totalMahasiswa; i++){
+            if (daftarMahasiswa[i].getNpm() == npm){
+                return daftarMahasiswa[i];
+            }
+        }
         return null;
     }
 
     private MataKuliah getMataKuliah(String namaMataKuliah) {
-        /* TODO: Implementasikan kode Anda di sini */
+        for (int i = 0; i < totalMatkul; i++){
+            if (daftarMataKuliah[i].getNama().equals(namaMataKuliah)){
+                return daftarMataKuliah[i];
+            }
+        }
         return null;
     }
 
@@ -29,16 +40,16 @@ public class SistemAkademik {
         System.out.print("Masukkan NPM Mahasiswa yang akan melakukan ADD MATKUL : ");
         long npm = Long.parseLong(input.nextLine());
 
-        /* TODO: Implementasikan kode Anda di sini 
-        Jangan lupa lakukan validasi apabila banyaknya matkul yang diambil mahasiswa sudah 9*/
-
         System.out.print("Banyaknya Matkul yang Ditambah: ");
         int banyakMatkul = Integer.parseInt(input.nextLine());
         System.out.println("Masukkan nama matkul yang ditambah");
         for(int i=0; i<banyakMatkul; i++){
             System.out.print("Nama matakuliah " + i+1 + " : ");
             String namaMataKuliah = input.nextLine();
-            /* TODO: Implementasikan kode Anda di sini */
+
+            // Method untuk addMatkul diimplementasikan pada Class Mahasiswa dan MataKuliah
+            getMahasiswa(npm).addMatkul(getMataKuliah(namaMataKuliah));
+            getMataKuliah(namaMataKuliah).addMahasiswa(getMahasiswa(npm));
         }
         System.out.println("\nSilakan cek rekap untuk melihat hasil pengecekan IRS.\n");
     }
@@ -49,8 +60,11 @@ public class SistemAkademik {
         System.out.print("Masukkan NPM Mahasiswa yang akan melakukan DROP MATKUL : ");
         long npm = Long.parseLong(input.nextLine());
 
-       /* TODO: Implementasikan kode Anda di sini 
-        Jangan lupa lakukan validasi apabila mahasiswa belum mengambil mata kuliah*/
+        // Jika mahasiswa belum mengambil mata kuliah apapun
+        if (getMahasiswa(npm).getTotalMatkul() == 0){
+            System.out.println("[DITOLAK] Belum ada mata kuliah yang diambil.");
+            return;
+        }
 
         System.out.print("Banyaknya Matkul yang Di-drop: ");
         int banyakMatkul = Integer.parseInt(input.nextLine());
@@ -58,7 +72,10 @@ public class SistemAkademik {
         for(int i=0; i<banyakMatkul; i++){
             System.out.print("Nama matakuliah " + i+1 + " : ");
             String namaMataKuliah = input.nextLine();
-            /* TODO: Implementasikan kode Anda di sini */
+
+            // Method untuk dropMatkul diimplementasikan pada Class Mahasiswa dan MataKuliah
+            getMahasiswa(npm).dropMatkul(getMataKuliah(namaMataKuliah));
+            getMataKuliah(namaMataKuliah).dropMahasiswa(getMahasiswa(npm));
         }
         System.out.println("\nSilakan cek rekap untuk melihat hasil pengecekan IRS.\n");
     }
@@ -67,38 +84,60 @@ public class SistemAkademik {
         System.out.print("Masukkan npm mahasiswa yang akan ditunjukkan ringkasannya : ");
         long npm = Long.parseLong(input.nextLine());
 
-        // TODO: Isi sesuai format keluaran
         System.out.println("\n--------------------------RINGKASAN--------------------------\n");
-        System.out.println("Nama: " + "");
+        System.out.println("Nama: " + getMahasiswa(npm).getNama());
         System.out.println("NPM: " + npm);
-        System.out.println("Jurusan: " + "");
+        System.out.println("Jurusan: " + getMahasiswa(npm).getNamaJurusan());
         System.out.println("Daftar Mata Kuliah: ");
 
-        /* TODO: Cetak daftar mata kuliah 
-        Handle kasus jika belum ada mata kuliah yang diambil*/
+        // Mencetak daftar mata kuliah yang diambil
+        if (getMahasiswa(npm).getTotalMatkul() == 0){
+            System.out.println("Belum ada mata kuliah yang diambil");
+        }
+        else{
+            for (int i = 0; i < getMahasiswa(npm).getTotalMatkul(); i++){
+                System.out.println(i+1 + ". " + getMahasiswa(npm).getDaftarMatkul()[i]);
+            } 
+        }
 
-        System.out.println("Total SKS: " + "");
+        System.out.println("Total SKS: " + getMahasiswa(npm).getSks());
         
         System.out.println("Hasil Pengecekan IRS:");
-        /* TODO: Cetak hasil cek IRS
-        Handle kasus jika IRS tidak bermasalah */
+
+        // Implementasi method Cek IRS mahasiswa
+        getMahasiswa(npm).cekIRS();
+        if (getMahasiswa(npm).getTotalMasalah() == 0){
+            System.out.println("IRS tidak bermasalah");
+        }
+        else{
+            for (int i = 0; i < getMahasiswa(npm).getTotalMasalah(); i++){
+                System.out.println(i+1 + ". " + getMahasiswa(npm).getMasalah()[i]);
+            } 
+        }
     }
 
     private void ringkasanMataKuliah(){
         System.out.print("Masukkan nama mata kuliah yang akan ditunjukkan ringkasannya : ");
         String namaMataKuliah = input.nextLine();
         
-        // TODO: Isi sesuai format keluaran
         System.out.println("\n--------------------------RINGKASAN--------------------------\n");
-        System.out.println("Nama mata kuliah: " + "");
-        System.out.println("Kode: " + "");
-        System.out.println("SKS: " + "");
-        System.out.println("Jumlah mahasiswa: " + "");
-        System.out.println("Kapasitas: " + "");
+        System.out.println("Nama mata kuliah: " + getMataKuliah(namaMataKuliah).getNama());
+        System.out.println("Kode: " + getMataKuliah(namaMataKuliah).getKode());
+        System.out.println("SKS: " + getMataKuliah(namaMataKuliah).getSks());
+        System.out.println("Jumlah mahasiswa: " + getMataKuliah(namaMataKuliah).getJumlahMahasiswa());
+        System.out.println("Kapasitas: " + getMataKuliah(namaMataKuliah).getKapasitas());
         System.out.println("Daftar mahasiswa yang mengambil mata kuliah ini: ");
-       /* TODO: Cetak hasil cek IRS
-        Handle kasus jika tidak ada mahasiswa yang mengambil */
-    }
+
+        // Mencetak ringkasan mata kuliah
+        if (getMataKuliah(namaMataKuliah).getJumlahMahasiswa() == 0){
+            System.out.println("Belum ada mahasiswa yang mengambil mata kuliah ini.");
+        }
+        else{
+            for (int i = 0; i < getMataKuliah(namaMataKuliah).getJumlahMahasiswa(); i++){
+                System.out.println(i+1 + ". " + getMataKuliah(namaMataKuliah).getDaftarMahasiswa()[i]);
+            } 
+        }
+    } 
 
     private void daftarMenu(){
         int pilihan = 0;
@@ -148,7 +187,10 @@ public class SistemAkademik {
             String[] dataMatkul = input.nextLine().split(" ", 4);
             int sks = Integer.parseInt(dataMatkul[2]);
             int kapasitas = Integer.parseInt(dataMatkul[3]);
-            /* TODO: Buat instance mata kuliah dan masukkan ke dalam Array */
+
+            // Menambahkan instance MataKuliah baru ke dalam daftarMataKuliah
+            daftarMataKuliah[totalMatkul] = new MataKuliah(dataMatkul[0], dataMatkul[1], sks, kapasitas);
+            totalMatkul++;
         }
 
         System.out.print("Banyaknya Mahasiswa di Fasilkom: ");
@@ -159,7 +201,10 @@ public class SistemAkademik {
         for(int i=0; i<banyakMahasiswa; i++){
             String[] dataMahasiswa = input.nextLine().split(" ", 2);
             long npm = Long.parseLong(dataMahasiswa[1]);
-            /* TODO: Buat instance mata kuliah dan masukkan ke dalam Array */
+
+            // Menambahkan instance Mahasiswa baru ke dalam daftarMahasiswa
+            daftarMahasiswa[totalMahasiswa] = new Mahasiswa(dataMahasiswa[0], npm);
+            totalMahasiswa++;
         }
 
         daftarMenu();
@@ -171,6 +216,4 @@ public class SistemAkademik {
         program.run();
     }
 
-
-    
 }
