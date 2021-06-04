@@ -17,11 +17,17 @@ public class HomeGUI {
         titleLabel.setFont(SistemAkademikGUI.fontTitle);
         // Button
         JButton jbtAddMahasiswa = new JButton("Tambah Mahasiswa");
+        color(jbtAddMahasiswa);
         JButton jbtAddMataKuliah = new JButton("Tambah Mata Kuliah");
+        color(jbtAddMataKuliah);
         JButton jbtAddIrs = new JButton("Tambah IRS");
+        color(jbtAddIrs);
         JButton jbtDropIrs = new JButton("Hapus IRS");
+        color(jbtDropIrs);
         JButton jbtRingkasanMahasiswa = new JButton("Lihat Ringkasan Mahasiswa");
+        color(jbtRingkasanMahasiswa);
         JButton jbtRingkasanMataKuliah = new JButton("Lihat Ringkasan Mata Kuliah");
+        color(jbtRingkasanMataKuliah);
         // Panel
         JPanel p = new JPanel(new GridLayout(7,1,0,17));
         JPanel pMain = new JPanel(new BorderLayout());
@@ -99,5 +105,11 @@ public class HomeGUI {
         pMain.add(p, BorderLayout.CENTER);
         
         frame.add(pMain);
+    }
+    // Method set color
+    public void color(JButton b){
+        b.setBackground(Color.BLUE);
+        b.setForeground(Color.WHITE);
+        b.setOpaque(true);
     }
 }

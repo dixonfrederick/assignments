@@ -46,9 +46,11 @@ public class DetailRingkasanMahasiswaGUI {
         hasil.setFont(SistemAkademikGUI.fontRingkasan);
         // Button
         JButton jbtReturn = new JButton("Selesai");
+        color(jbtReturn);
         // Panel
         int ukuranGrid = mahasiswa.getBanyakMasalahIRS() + mahasiswa.getBanyakMatkul() + 10;
         JPanel p = new JPanel(new GridLayout(ukuranGrid,1,0,10));
+        JPanel pMain = new JPanel(new BorderLayout());
         
         // Menambahkan komponen pada panel
         p.add(titleLabel);
@@ -67,7 +69,7 @@ public class DetailRingkasanMahasiswaGUI {
             public void actionPerformed(ActionEvent e) {
                 frame.setSize(500,500);
                 frame.setLocationRelativeTo(null);
-                frame.remove(p);
+                frame.remove(pMain);
                 new HomeGUI(frame, daftarMahasiswa, daftarMataKuliah);
                 frame.revalidate();
             }
@@ -75,7 +77,14 @@ public class DetailRingkasanMahasiswaGUI {
         );
         frame.setSize(500,750);
         frame.setLocationRelativeTo(null);
-        frame.add(p);
+        // Border
+        pMain.add(new JLabel("      "), BorderLayout.NORTH);
+        pMain.add(new JLabel("              "), BorderLayout.WEST);
+        pMain.add(new JLabel("              "), BorderLayout.EAST);
+        pMain.add(new JLabel("      "), BorderLayout.SOUTH);
+        pMain.add(p, BorderLayout.CENTER);
+         
+        frame.add(pMain);
     }
     // Method untuk mencetak daftar MataKuliah
     public void daftarMatkul(Mahasiswa mahasiswa, JPanel p){
@@ -117,5 +126,11 @@ public class DetailRingkasanMahasiswaGUI {
             masalah.setText((i+1) + ". " + arr[i]);
             p.add(masalah);
         }
+    }
+    // Method set color
+    public void color(JButton b){
+        b.setBackground(Color.BLUE);
+        b.setForeground(Color.WHITE);
+        b.setOpaque(true);
     }
 }

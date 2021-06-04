@@ -29,9 +29,10 @@ class SistemAkademikGUI extends JFrame{
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
-        // Set judul frame dan Set lokasi frame di tengah
+        // Set judul, lokasi, dan border frame
         frame.setTitle("Administrator - Sistem Akademik");
         frame.setLocationRelativeTo(null);
+        frame.getRootPane().setBorder(BorderFactory.createMatteBorder(6, 6, 6, 6, Color.BLUE));
         
         new HomeGUI(frame, daftarMahasiswa, daftarMataKuliah);
         frame.setVisible(true);

@@ -46,9 +46,11 @@ public class DetailRingkasanMataKuliahGUI {
         daftar.setFont(SistemAkademikGUI.fontRingkasan);
         // Button
         JButton jbtReturn = new JButton("Selesai");
+        color(jbtReturn);
         // Panel
         int ukuranGrid = mataKuliah.getJumlahMahasiswa() + 9;
         JPanel p = new JPanel(new GridLayout(ukuranGrid,1,0,12));
+        JPanel pMain = new JPanel(new BorderLayout());
 
         // Menambahkan komponen pada panel
         p.add(titleLabel);
@@ -66,7 +68,7 @@ public class DetailRingkasanMataKuliahGUI {
             public void actionPerformed(ActionEvent e) {
                 frame.setSize(500,500);
                 frame.setLocationRelativeTo(null);
-                frame.remove(p);
+                frame.remove(pMain);
                 new HomeGUI(frame, daftarMahasiswa, daftarMataKuliah);
                 frame.revalidate();
             }
@@ -74,7 +76,14 @@ public class DetailRingkasanMataKuliahGUI {
         );
         frame.setSize(500,750);
         frame.setLocationRelativeTo(null);
-        frame.add(p);
+        // Border
+        pMain.add(new JLabel("      "), BorderLayout.NORTH);
+        pMain.add(new JLabel("              "), BorderLayout.WEST);
+        pMain.add(new JLabel("              "), BorderLayout.EAST);
+        pMain.add(new JLabel("      "), BorderLayout.SOUTH);
+        pMain.add(p, BorderLayout.CENTER);
+         
+        frame.add(pMain);
     }
     // Method untuk mencetak daftar Mahasiswa yang mengambil mataKuliah
     public void daftarAmbil(MataKuliah mataKuliah, JPanel p){
@@ -96,5 +105,10 @@ public class DetailRingkasanMataKuliahGUI {
             p.add(ambil);
         }
     }
-
+    // Method set color
+    public void color(JButton b){
+        b.setBackground(Color.BLUE);
+        b.setForeground(Color.WHITE);
+        b.setOpaque(true);
+    }
 }

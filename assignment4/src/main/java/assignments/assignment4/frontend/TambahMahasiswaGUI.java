@@ -30,7 +30,9 @@ public class TambahMahasiswaGUI{
         JTextField jtfNpm = new JTextField();
         // Button
         JButton jbtAdd = new JButton("Tambahkan");
+        color(jbtAdd);
         JButton jbtReturn = new JButton("Kembali");
+        color(jbtReturn);
         // Panel
         JPanel p = new JPanel(new GridLayout(7,1,0,17));
         JPanel pMain = new JPanel(new BorderLayout());
@@ -103,5 +105,10 @@ public class TambahMahasiswaGUI{
 
         frame.add(pMain);
     }
-    
+    // Method set color
+    public void color(JButton b){
+        b.setBackground(Color.BLUE);
+        b.setForeground(Color.WHITE);
+        b.setOpaque(true);
+    }
 }
