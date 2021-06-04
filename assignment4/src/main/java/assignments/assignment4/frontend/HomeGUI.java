@@ -15,7 +15,89 @@ public class HomeGUI {
         titleLabel.setText("Selamat datang di Sistem Akademik");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setFont(SistemAkademikGUI.fontTitle);
+        // Button
+        JButton jbtAddMahasiswa = new JButton("Tambah Mahasiswa");
+        JButton jbtAddMataKuliah = new JButton("Tambah Mata Kuliah");
+        JButton jbtAddIrs = new JButton("Tambah IRS");
+        JButton jbtDropIrs = new JButton("Hapus IRS");
+        JButton jbtRingkasanMahasiswa = new JButton("Lihat Ringkasan Mahasiswa");
+        JButton jbtRingkasanMataKuliah = new JButton("Lihat Ringkasan Mata Kuliah");
+        // Panel
+        JPanel p = new JPanel(new GridLayout(7,1,0,17));
+        JPanel pMain = new JPanel(new BorderLayout());
+
+        // Menambahkan komponen pada panel
+        p.add(titleLabel);
+        p.add(jbtAddMahasiswa);
+        p.add(jbtAddMataKuliah);
+        p.add(jbtAddIrs);
+        p.add(jbtDropIrs);
+        p.add(jbtRingkasanMahasiswa);
+        p.add(jbtRingkasanMataKuliah);
         
-        // TODO: Implementasikan Halaman Home
+        // Listener
+        jbtAddMahasiswa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(pMain);
+                new TambahMahasiswaGUI(frame, daftarMahasiswa, daftarMataKuliah);
+                frame.revalidate();
+            }
+        }
+        );
+        jbtAddMataKuliah.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(pMain);
+                new TambahMataKuliahGUI(frame, daftarMahasiswa, daftarMataKuliah);
+                frame.revalidate();
+            }
+        }
+        );
+        jbtAddIrs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(pMain);
+                new TambahIRSGUI(frame, daftarMahasiswa, daftarMataKuliah);
+                frame.revalidate();
+            }
+        }
+        );
+        jbtDropIrs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(pMain);
+                new HapusIRSGUI(frame, daftarMahasiswa, daftarMataKuliah);
+                frame.revalidate();
+            }
+        }
+        );
+        jbtRingkasanMahasiswa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(pMain);
+                new RingkasanMahasiswaGUI(frame, daftarMahasiswa, daftarMataKuliah);
+                frame.revalidate();
+            }
+        }
+        );
+        jbtRingkasanMataKuliah.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(pMain);
+                new RingkasanMataKuliahGUI(frame, daftarMahasiswa, daftarMataKuliah);
+                frame.revalidate();
+            }
+        }
+        );
+        
+        // Border
+        pMain.add(new JLabel("      "), BorderLayout.NORTH);
+        pMain.add(new JLabel("              "), BorderLayout.WEST);
+        pMain.add(new JLabel("              "), BorderLayout.EAST);
+        pMain.add(new JLabel("      "), BorderLayout.SOUTH);
+        pMain.add(p, BorderLayout.CENTER);
+        
+        frame.add(pMain);
     }
 }
